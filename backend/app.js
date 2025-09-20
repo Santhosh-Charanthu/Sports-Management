@@ -2,10 +2,6 @@ if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
 
-if (process.env.NODE_ENV === "production") {
-  app.set("trust proxy", 1); // trust first proxy
-}
-
 const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
@@ -25,6 +21,10 @@ const sportsRoutes = require("./routes/sportsRoutes");
 // const ExpressError = require("./utils/ExpressError");
 
 const app = express();
+
+if (process.env.NODE_ENV === "production") {
+  app.set("trust proxy", 1); // trust first proxy
+}
 
 // View Engine
 app.engine("ejs", ejsMate);
