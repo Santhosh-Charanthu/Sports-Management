@@ -2,6 +2,10 @@ if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
 
+if (process.env.NODE_ENV === "production") {
+  app.set("trust proxy", 1); // trust first proxy
+}
+
 const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
