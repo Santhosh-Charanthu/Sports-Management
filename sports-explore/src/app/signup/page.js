@@ -4,6 +4,8 @@ import Toast from "../components/Toast";
 import Link from "next/link";
 import styles from "../styles/Authentication.module.css"; // ✅ same CSS as login
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+
 export default function SignupPage() {
   const [formData, setFormData] = useState({
     name: "",
@@ -16,7 +18,7 @@ export default function SignupPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:8080/auth/signup", {
+      const res = await fetch(`${API_BASE_URL}/auth/signup`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",

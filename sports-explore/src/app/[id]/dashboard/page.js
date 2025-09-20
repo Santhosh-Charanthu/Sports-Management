@@ -8,6 +8,8 @@ import EditSessionModal from "../../components/EditSessionModal";
 import DeleteConfirmationModal from "../../components/DeleteConfirmationModal";
 import Toast from "../../components/Toast";
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+
 export default function Dashboard() {
   const { id } = useParams();
 
@@ -33,7 +35,7 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch("http://localhost:8080/sessions/my-sessions/", {
+        const res = await fetch(`${API_BASE_URL}/sessions/my-sessions/`, {
           credentials: "include",
         });
 
@@ -50,12 +52,9 @@ export default function Dashboard() {
         const userData = await res.json();
 
         // Fetch available sessions
-        const resAvailable = await fetch(
-          "http://localhost:8080/sessions/available",
-          {
-            credentials: "include",
-          }
-        );
+        const resAvailable = await fetch(`${API_BASE_URL}/sessions/available`, {
+          credentials: "include",
+        });
         const availableData = await resAvailable.json();
         console.log(availableData);
 
@@ -89,7 +88,7 @@ export default function Dashboard() {
   const handleSaveEdit = async (updatedData) => {
     try {
       const res = await fetch(
-        `http://localhost:8080/sessions/${selectedSession._id}`,
+        `${API_BASE_URL}/sessions/${selectedSession._id}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -121,7 +120,7 @@ export default function Dashboard() {
   const handleConfirmDelete = async () => {
     try {
       const res = await fetch(
-        `http://localhost:8080/sessions/${selectedDeleteSession._id}`,
+        `${API_BASE_URL}/sessions/${selectedDeleteSession._id}`,
         {
           method: "DELETE",
           credentials: "include",
@@ -151,10 +150,10 @@ export default function Dashboard() {
 
   const handleJoin = async (session) => {
     try {
-      const res = await fetch(
-        `http://localhost:8080/sessions/${session._id}/join`,
-        { method: "POST", credentials: "include" }
-      );
+      const res = await fetch(`${API_BASE_URL}/sessions/${session._id}/join`, {
+        method: "POST",
+        credentials: "include",
+      });
 
       if (!res.ok) throw new Error("Failed to join session");
 
@@ -176,10 +175,10 @@ export default function Dashboard() {
 
   const handleLeave = async (session) => {
     try {
-      const res = await fetch(
-        `http://localhost:8080/sessions/${session._id}/leave`,
-        { method: "POST", credentials: "include" }
-      );
+      const res = await fetch(`${API_BASE_URL}/sessions/${session._id}/leave`, {
+        method: "POST",
+        credentials: "include",
+      });
 
       if (!res.ok) throw new Error("Failed to leave session");
 

@@ -11,13 +11,15 @@ export default function AddSportModal({ isOpen, onClose }) {
   const [editValue, setEditValue] = useState("");
   const [toast, setToast] = useState(null);
 
+  const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+
   useEffect(() => {
     if (isOpen) fetchSports();
   }, [isOpen]);
 
   const fetchSports = async () => {
     try {
-      const res = await fetch("http://localhost:8080/sports", {
+      const res = await fetch(`${API_BASE_URL}/sports`, {
         credentials: "include",
       });
       const data = await res.json();
@@ -32,7 +34,7 @@ export default function AddSportModal({ isOpen, onClose }) {
     if (!newSport.trim()) return;
 
     try {
-      const res = await fetch("http://localhost:8080/sports", {
+      const res = await fetch(`${API_BASE_URL}/sports`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -59,7 +61,7 @@ export default function AddSportModal({ isOpen, onClose }) {
     if (!editValue.trim()) return;
 
     try {
-      const res = await fetch(`http://localhost:8080/sports/${id}`, {
+      const res = await fetch(`${API_BASE_URL}/sports/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -86,7 +88,7 @@ export default function AddSportModal({ isOpen, onClose }) {
     if (!confirm("Are you sure you want to delete this sport?")) return;
 
     try {
-      const res = await fetch(`http://localhost:8080/sports/${id}`, {
+      const res = await fetch(`${API_BASE_URL}/sports/${id}`, {
         method: "DELETE",
         credentials: "include",
       });
