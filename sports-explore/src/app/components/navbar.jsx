@@ -3,6 +3,8 @@ import Toast from "./Toast";
 import AddSportModal from "./AddSportModal";
 import { useState, useEffect } from "react";
 
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
+
 export default function Navbar({
   currentUser,
   onSessionCreated,
@@ -25,7 +27,7 @@ export default function Navbar({
   // Fetch sports from backend
   const fetchSports = async () => {
     try {
-      const res = await fetch("http://localhost:8080/sports", {
+      const res = await fetch(`${API_BASE_URL}/sports`, {
         credentials: "include",
       });
       const data = await res.json();
@@ -41,7 +43,7 @@ export default function Navbar({
 
   const handleLogout = async () => {
     try {
-      const response = await fetch("http://localhost:8080/auth/logout", {
+      const response = await fetch(`${API_BASE_URL}/auth/logout`, {
         method: "GET",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -66,7 +68,7 @@ export default function Navbar({
   const handleCreateSession = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:8080/sessions", {
+      const res = await fetch(`${API_BASE_URL}/sessions`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
